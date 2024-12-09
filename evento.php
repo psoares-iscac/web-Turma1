@@ -10,7 +10,7 @@ if(empty([$_GET['id']])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>Desenvolvimento para a Web</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-icons.min.css">
     
@@ -39,13 +39,13 @@ if($stmt && $stmt->rowCount() == 1){
     <div class="row">
         <div class="col-8">
             <div class="display-5"><?= $evento->nome ?></div>
-            <div class="mt-2 fs-5 fw-bold"><?= $formatada->format($data) ?></div>
-            <div class="mt-2 fs-5"><?= $evento->descricao ?></div>
-            <div class="mt-2 fs-5">Local: localização do evento</div>
+            <p class="mt-2 fs-5 fw-bold"><i class="me-2 bi bi-calendar3"></i><?= $formatada->format($data) ?></p>
+            <p class="mt-2 fs-5"><i class="me-2 bi bi-card-text"></i><?= $evento->descricao ?></p>
+            <p class="mt-2 fs-5"><i class="me-2 bi bi-geo-alt"></i>Cabeceira de cima</p>
+            <button class="mt-3 p-3 btn btn-outline-info fs-4">QUERO PARTICIPAR <i class="mx-4 bi bi-arrow-right-square-fill"></i></button>
         </div>
         <div class="col-4">
-            <img class="img-fluid w-100" src="<?= $imagem ?>" alt="imagem do evento"
-            style="">
+            <img class="img-fluid w-100" src="<?= $imagem ?>" alt="imagem do evento">
         </div> 
     </div>
 </div>
@@ -56,7 +56,10 @@ if($stmt && $stmt->rowCount() == 1){
     </div>
     <div class="row mt-3">
         <div class="col-9">
-            <?= $evento->texto ?>
+            <p class="lh-lg">
+                <?= $evento->texto ?>
+            </p>
+            
         </div>
         <div class="col-3">
             <div class="row g-3 gallery">
@@ -86,12 +89,41 @@ if($stmt && $stmt->rowCount() == 1){
     </div>
 </div>
 <!-- comentários -->
+<?php
+$sql = 'SELECT * FROM comentarios WHERE eventoId = :i';
+$stmt = $dbh->prepare($sql);
+$stmt->bindValue(':i', $id);
+$stmt->execute();
+if(!$stmt || $stmt->rowCount() == 0){
+    $resultados = false;
+}else $resultados = true;
+?>
 <div class="container">
     <div class="row">
         <div class="col-6 fs-3 border-bottom border-dark">Comentários</div>
     </div>
+    <?php
+    if($resultados){
+        while($c = $stmt->fetchObject()){
+    ?>
+            <div class="row">
+                <div class="col-auto">
+                    <i class="bi bi-person-bounding-box" style="font-size:48px;"></i>
+                </div>
+                <div class="col p-3">
+                    <div class="fw-light">Anónimo, <?= $c->date ?></div>
+                    <div><?= $c->mensagem ?></div>
+                </div>
+            </div>
+    <?php 
+        }
+    }else{
+        echo '<p>Ainda não foram inseridos comentários.</p>';
+    }
+    ?>
 </div>
 
+<div style="height:300px;"></div>
 <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
