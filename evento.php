@@ -1,5 +1,5 @@
 <?php 
-if(empty([$_GET['id']])){
+if(empty($_GET['id'])){
     header('Location:index.php');
     die();
 }
@@ -13,7 +13,11 @@ if(empty([$_GET['id']])){
     <title>Desenvolvimento para a Web</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-icons.min.css">
-    
+    <style>
+    html {
+        scroll-behavior: smooth;
+    }
+</style>
 </head>
 <body>
 <?php require('includes/connection.php') ?>
@@ -33,13 +37,14 @@ if($stmt && $stmt->rowCount() == 1){
         IntlDateFormatter::FULL, // Estilo para a data completa
         IntlDateFormatter::NONE // Sem hora
     );
+    $dataExtenso = $formatada->format($data);
 }
 ?>
 <div class="container mt-5">
     <div class="row">
         <div class="col-8">
             <div class="display-5"><?= $evento->nome ?></div>
-            <p class="mt-2 fs-5 fw-bold"><i class="me-2 bi bi-calendar3"></i><?= $formatada->format($data) ?></p>
+            <p class="mt-2 fs-5 fw-bold"><i class="me-2 bi bi-calendar3"></i><?= $dataExtenso ?></p>
             <p class="mt-2 fs-5"><i class="me-2 bi bi-card-text"></i><?= $evento->descricao ?></p>
             <p class="mt-2 fs-5"><i class="me-2 bi bi-geo-alt"></i>Cabeceira de cima</p>
             <button class="mt-3 p-3 btn btn-outline-info fs-4">QUERO PARTICIPAR <i class="mx-4 bi bi-arrow-right-square-fill"></i></button>
@@ -90,7 +95,7 @@ if($stmt && $stmt->rowCount() == 1){
 </div>
 <!-- comentários -->
 <?php
-$sql = 'SELECT * FROM comentarios WHERE eventoId = :i';
+$sql = 'SELECT * FROM comentarios WHERE eventoId = :i ORDER BY id DESC';
 $stmt = $dbh->prepare($sql);
 $stmt->bindValue(':i', $id);
 $stmt->execute();
@@ -98,7 +103,9 @@ if(!$stmt || $stmt->rowCount() == 0){
     $resultados = false;
 }else $resultados = true;
 ?>
-<div class="container">
+
+<!-- lista de comentarios -->
+<div id="comentarios" class="container">
     <div class="row">
         <div class="col-6 fs-3 border-bottom border-dark">Comentários</div>
     </div>
@@ -111,7 +118,7 @@ if(!$stmt || $stmt->rowCount() == 0){
                     <i class="bi bi-person-bounding-box" style="font-size:48px;"></i>
                 </div>
                 <div class="col p-3">
-                    <div class="fw-light">Anónimo, <?= $c->date ?></div>
+                    <div class="fw-light"><?= $c->email ?>, <?= $c->date ?></div>
                     <div><?= $c->mensagem ?></div>
                 </div>
             </div>
@@ -122,6 +129,29 @@ if(!$stmt || $stmt->rowCount() == 0){
     }
     ?>
 </div>
+
+<!-- inserir comentarios -->
+<div style="width:400px;" class="mt-5 mx-auto">
+    <form action="formData/comentarioInserir.php" method="GET">
+        <input type="hidden" name="eventoId" value="<?= $id ?>">
+        <div class="form-floating mb-3">
+                <input name="email" type="email" class="form-control" id="com-email" placeholder="name@example.com">
+            <label for="floatingInput">Endereço de Email</label>
+        </div>
+        <div class="form-floating">
+            <textarea name="mensagem" class="form-control" placeholder="Deixe a sua mensagem" id="com-mensagem"></textarea>
+            <label for="floatingTextarea">Deixe a sua mensagem</label>
+        </div>
+        <div class="form-check mt-2 mb-2">
+            <input name="aceito" class="form-check-input" type="checkbox" value="sim" id="com-check" checked>
+            <label class="form-check-label" for="flexCheckChecked">
+                Permito tratamento dos meus dados
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar comentário</button>
+    </form>
+</div>
+
 
 <div style="height:300px;"></div>
 <script src="js/bootstrap.bundle.min.js"></script>

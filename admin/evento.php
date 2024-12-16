@@ -80,48 +80,49 @@ if(empty($_GET['id'])){
      action=POST, enctype="..." porque envolve o upload de imagens -->
     <form action="formData/eventoEdicao.php" method="POST" enctype="multipart/form-data">
         <input type="hidden" name="eventoId" id="evento-id" value="<?= $evento->id ?>">
-    <div class="container">
-        <div class="row mb-2">
-            <div class="col">
-                <label for="txt-nome" class="form-label">Nome do evento</label>
-                <input type="text" class="form-control" id="txt-nome" name="txtNome" placeholder="insira o nome do evento" value="<?= $evento->nome ?>">
-            </div>  
-        </div>
-        <div class="row mb-2">
-            <div class="col-3">
-                <label for="txt-data" class="form-label">Data</label>
-                <input type="date" class="form-control" id="txt-data" name="txtData" value="<?= $evento->data ?>">
-            </div>  
-        </div>
-        <div class="row mb-2">
-            <div class="col">
-                <label for="txt-descricao" class="form-label">Descrição do evento</label>
-                <textarea class="form-control" id="txt-descricao" name="txtDescricao" 
-                    placeholder="insira a descrição do evento" rows="2"><?= $evento->descricao ?></textarea>
-            </div>  
-        </div>
-        <div class="row mb-4">
-            <!-- Campo oculto para enviar o conteúdo -->
-            <input type="hidden" name="editorContent" id="editor-content">
-            <!-- exemplo de editor de texto WYSIWYG, quill - https://quilljs.com/  -->
-            <div class="col">
-                <label for="txt-informacao" class="form-label">Informação do evento</label>
-                <div class="fs-6 border border-1" id="txt-informacao"> 
-                    <?= $evento->texto ?>
-                </div>
-            </div>  
-        </div>
-        <div class="row mb-2">
-            <div class="col">   
-                <input type="file" class="form-control" id="file-img" name="fileImg" accept="image/*">
+        <div class="container">
+            <div class="row mb-2">
+                <div class="col">
+                    <label for="txt-nome" class="form-label">Nome do evento</label>
+                    <input type="text" class="form-control" id="txt-nome" name="txtNome" placeholder="insira o nome do evento" value="<?= $evento->nome ?>">
+                </div>  
             </div>
-        </div>
-        <div>
-            <button type="submit" class="btn btn-outline-dark w-100 text-uppercase">Confirmar edição do evento</button>
-        </div>
-        
+            <div class="row mb-2">
+                <div class="col-3">
+                    <label for="txt-data" class="form-label">Data</label>
+                    <input type="date" class="form-control" id="txt-data" name="txtData" value="<?= $evento->data ?>">
+                </div>  
+            </div>
+            <div class="row mb-2">
+                <div class="col">
+                    <label for="txt-descricao" class="form-label">Descrição do evento</label>
+                    <textarea class="form-control" id="txt-descricao" name="txtDescricao" 
+                        placeholder="insira a descrição do evento" rows="2"><?= $evento->descricao ?></textarea>
+                </div>  
+            </div>
+            <div class="row mb-4">
+                <!-- Campo oculto para enviar o conteúdo -->
+                <input type="hidden" name="editorContent" id="editor-content">
+                <!-- exemplo de editor de texto WYSIWYG, quill - https://quilljs.com/  -->
+                <div class="col">
+                    <label for="txt-informacao" class="form-label">Informação do evento</label>
+                    <div class="fs-6 border border-1" id="txt-informacao"> 
+                        <?= $evento->texto ?>
+                    </div>
+                </div>  
+            </div>
+            <div class="row mb-2">
+                <div class="col">   
+                    <input type="file" class="form-control" id="file-img"
+                     name="fileImg" accept="image/*">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-outline-dark w-100 text-uppercase">Confirmar edição do evento</button>
+            </div>
+            
 
-    </div>
+        </div>
 
     </form>
 

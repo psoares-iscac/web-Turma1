@@ -1,21 +1,32 @@
+/*
+MySQL Data Transfer
+Source Host: localhost
+Source Database: turma2
+Target Host: localhost
+Target Database: turma2
+Date: 16/12/2024 12:52:16
+*/
 
--- Dumping structure for table turma1.comentarios
-CREATE TABLE IF NOT EXISTS `comentarios` (
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for comentarios
+-- ----------------------------
+DROP TABLE IF EXISTS `comentarios`;
+CREATE TABLE `comentarios` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `eventoId` int(10) unsigned NOT NULL DEFAULT 0,
   `email` varchar(250) DEFAULT '0',
   `mensagem` text NOT NULL,
-  `date` date NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
--- Dumping data for table turma1.comentarios: ~2 rows (approximately)
-/*!40000 ALTER TABLE `comentarios` DISABLE KEYS */;
-INSERT INTO `comentarios` (`id`, `eventoId`, `email`, `mensagem`, `date`) VALUES
-	(1, 3, 'psoares@iscac.pt', 'Palestras e seminários muitio interessantes, com uma excelente organização. Recomendo vivamente a todos os que se preocupam com o seu bem estrar.', '2024-07-23'),
-	(2, 3, '', 'Não gostei nada, foi uma autêntica vergonha. A organização falhou em muitos aspectos. Enormes filas para participar em qualquer uma das atividades.', '2024-08-10');
-/*!40000 ALTER TABLE `comentarios` ENABLE KEYS */;
-
-/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
-/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+-- ----------------------------
+-- Records 
+-- ----------------------------
+INSERT INTO `comentarios` VALUES ('1', '5', 'psoares@iscac.pt', 'Palestras e seminários muitio interessantes, com uma excelente organização. Recomendo vivamente a todos os que se preocupam com o seu bem estar.', '2024-07-23 00:00:00');
+INSERT INTO `comentarios` VALUES ('2', '5', 'Anónimo', 'Não gostei nada, foi uma autêntica vergonha. A organização falhou em muitos aspectos. Enormes filas para participar em qualquer uma das atividades.', '2024-08-10 00:00:00');
+INSERT INTO `comentarios` VALUES ('6', '5', 'Anónimo', 'srfhgsdfhdfh', '2024-12-12 17:58:07');
+INSERT INTO `comentarios` VALUES ('7', '5', 'psoares@iscac.pt', 'zdbgzcbxcnhb', '2024-12-12 17:58:07');
+INSERT INTO `comentarios` VALUES ('10', '5', 'p.paulo.soares@gmail.com', 'aqui vai', '0000-00-00 00:00:00');
+INSERT INTO `comentarios` VALUES ('11', '5', 'p.paulo.soares@gmail.com', 'OUTRO', '2024-12-16 12:51:54');
